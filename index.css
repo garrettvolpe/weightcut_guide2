@@ -76,7 +76,6 @@ h4,h5 {
 
 @media only screen and (max-width: 600px) {
     body {
-      background-color: lightblue;
     }
     .mobileFix {
         text-align: center;
