@@ -160,9 +160,7 @@ function createBaseTable() {
     tr.appendChild(th1);
     tr.appendChild(th2);
     table.appendChild(tr);
-    table.classList.add("mainWeightTable")
-    table.classList.add("table")
-    table.classList.add("table-bordered")
+    table.classList.add("mainWeightTable", "table", "table-dark", "table-bordered")
     maindiv.append(table);
 
 }
