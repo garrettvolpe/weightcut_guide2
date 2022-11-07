@@ -148,11 +148,30 @@ function roundNearestHalf(num) {
     return Math.round(num * 2) / 2;
 }
 
+
+function createBaseTable() {
+    let maindiv = document.querySelector('#resultsWeightTable');
+    let table = document.createElement('table');
+    let tr = document.createElement('tr');
+    let th1 = document.createElement('th');
+    let th2 = document.createElement('th');
+    th1.innerHTML = "Date";
+    th2.innerHTML = "Expected Weight";
+    tr.appendChild(th1);
+    tr.appendChild(th2);
+    table.appendChild(tr);
+    table.classList.add("mainWeightTable")
+    table.classList.add("table")
+    table.classList.add("table-bordered")
+    maindiv.append(table);
+
+}
+
 function renderTableRow(date, expectedWeight) {
     let tr = document.createElement('tr');
     let tableDate = document.createElement('td');
     let weightOnDay = document.createElement('td');
-    let table = document.querySelector("#mainTable")
+    let table = document.querySelector(".mainWeightTable")
     tableDate.innerText = date
     weightOnDay.innerText = expectedWeight
     weightOnDay.classList.add("weightData")
@@ -161,25 +180,25 @@ function renderTableRow(date, expectedWeight) {
     table.appendChild(tr)
 }
 
-function testRenderRow() {
-    let maindiv = document.querySelector('#resultsWeightTable');
-    let table = document.createElement('table');
-    let tr = document.createElement('tr');
-    let tableDate = document.createElement('td');
-    let weightOnDay = document.createElement('td');
-    tableDate.innerHTML = "test date"
-    tr.appendChild(tableDate)
-    table.appendChild(tr)
-    maindiv.append(table)
-}
-
-function getDateRange() {
+function printDatesForTable(startDate) {
     for (let i = 0; i < days + 1; i++) {
-        let tempDate = new Date(inputs.startDate)
+        let tempDate = new Date(startDate)
         tempDate.setDate(tempDate.getDate() + i)
         let dt = tempDate
         dt = (dt.getMonth() + 1) + "/" + dt.getDate()
         renderTableRow(dt, "0")
+    }
+}
+
+function weightLossFromCal(startWeight) {
+    let tds = document.querySelectorAll('.weightData')
+    console.log(tds)
+    let startDelim = 0
+    for (let weightNum of tds) {
+        console.log(startWeight)
+        console.log(startDelim)
+        weightNum.innerText = roundNearestHalf(startWeight - startDelim)
+        startDelim += .15
     }
 }
 
@@ -190,7 +209,7 @@ function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     let infoHTML =
         `<strong>${getDaysUntilWeighIn(startDate, weighInDate)}</strong>
         <br>
-        You will be able to lose an additional <strong>${carbWeight} pounds</strong> after eliminating carbs!
+        Can lose an additional <strong>${carbWeight} pounds</strong> after eliminating carbs!
         <br>`;
 
     let resultsHTML =
@@ -244,7 +263,11 @@ function formSubmit() {
 
         printOutput(TDEE, carbWeight, inputs.gender, inputs.startDate, inputs.weighInDate);
 
-        testRenderRow();
+        createBaseTable();
+
+        printDatesForTable(inputs.startDate)
+
+        weightLossFromCal(inputs.weight)
     }
 }
 
