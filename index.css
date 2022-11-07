@@ -45,7 +45,6 @@ body {
     min-width: 75%;
     padding: 0;
     margin-: 0;
-    
 }
 
 
@@ -80,5 +79,9 @@ h4,h5 {
     .mobileFix {
         text-align: center;
         display: block;
+    }
+    
+    #resultsWeightTable {
+        min-width: 100%
     }
   }

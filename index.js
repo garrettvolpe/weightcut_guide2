@@ -310,7 +310,7 @@ function saltInfo(){
     tds[tds.length - 2].innerText = "None"
     tds[tds.length - 1].innerText = "None"
 }
-
+</div>
 
 function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
@@ -322,7 +322,7 @@ function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
         <br>`;
 
     let resultsHTML =
-        `Your Total Daily Caloric Expendature (maintaince) is <strong> ${Math.max(TDEE, safeMinCalories)}</strong> calories per day.
+        `Your Total Daily Caloric Expendature (maintenance) is <strong> ${Math.max(TDEE, safeMinCalories)}</strong> calories per day.
         <br>
         To lose 2 lbs / week, eat <strong> ${Math.max(TDEE - 1000, safeMinCalories)}</strong> calories per day.<br>
         To lose 1.5 lbs / week, eat <strong> ${Math.max(TDEE - 750, safeMinCalories)}</strong> calories per day<br>
