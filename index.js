@@ -149,7 +149,6 @@ function roundNearestHalf(num) {
 }
 
 function renderTableRow(date, expectedWeight) {
-
     let tr = document.createElement('tr');
     let tableDate = document.createElement('td');
     let weightOnDay = document.createElement('td');
@@ -162,6 +161,17 @@ function renderTableRow(date, expectedWeight) {
     table.appendChild(tr)
 }
 
+function testRenderRow() {
+    let maindiv = document.querySelector('#resultsWeightTable');
+    let table = document.createElement('table');
+    let tr = document.createElement('tr');
+    let tableDate = document.createElement('td');
+    let weightOnDay = document.createElement('td');
+    tableDate.innerHTML = "test date"
+    tr.appendChild(tableDate)
+    table.appendChild(tr)
+    maindiv.append(table)
+}
 
 function getDateRange() {
     for (let i = 0; i < days + 1; i++) {
@@ -190,16 +200,15 @@ function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
         To lose 1.5 lbs / week, eat <strong> ${Math.max(TDEE - 750, safeMinCalories)}</strong> calories per day<br>
         To lose 1 lbs / week, eat <strong> ${Math.max(TDEE - 500, safeMinCalories)}</strong> calories per day.<br>`;
 
-    let weightTableHTML = ''
 
 
 
 
     const safeMinCaloriesRegex = new RegExp(safeMinCalories, "g");
-    document.querySelector("#resultsContainer").innerHTML = resultsHTML.replace(safeMinCaloriesRegex, `< abbr title = '${((gender === "M") ? "Men" : "Women")} are not advised to consume less than ${safeMinCalories} calories per day.' > ${safeMinCalories}</abbr > `);
+    document.querySelector("#resultsContainer").innerHTML = resultsHTML.replace(safeMinCaloriesRegex, `<abbr title = '${((gender === "M") ? "Men" : "Women")} are not advised to consume less than ${safeMinCalories} calories per day.'> ${safeMinCalories}</abbr>`);
     document.querySelector("#infoContainer").innerHTML = infoHTML.replace(safeMinCaloriesRegex, `< abbr title = '${((gender === "M") ? "Men" : "Women")} are not advised to consume less than ${safeMinCalories} calories per day.' > ${safeMinCalories}</abbr > `);
 
-    document.querySelector("#resultsWeightTable").innerHTML = weightTableHTML;
+    // document.querySelector("#resultsWeightTable").innerHTML = weightTableHTML;
 
     document.querySelector("#resultsContainer").style.visibility = "visible";
     document.querySelector("#infoContainer").style.visibility = "visible";
@@ -234,6 +243,8 @@ function formSubmit() {
         const carbWeight = carbStored(inputs.weight, inputs.bodyFatPercent);
 
         printOutput(TDEE, carbWeight, inputs.gender, inputs.startDate, inputs.weighInDate);
+
+        testRenderRow();
     }
 }
 
