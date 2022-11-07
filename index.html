@@ -1,114 +1,121 @@
-let today = new Date();
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDEE Calculator</title>
+</head>
+
+<body>
+    <div id="inputsContainer">
+        <table>
+            <tr style="text-align: center;">
+                <td>
+                    <h1>Weight Cut Guide</h1>
+                    <h4>(24 hour before weigh-ins)</h4>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="gender">Gender: </label>
+                    <select id="gender">
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+
+                    <br />
+                    <label for="age">Age: </label>
+                    <input type="number" id="age" min="0" max="100" required>
+
+                    <br />
+                    <label for="weight">Weight: </label>
+                    <input type="number" id="weight" min="0" max="500" required>
+                    <select id="weightUnit">
+                        <option value="LBS">lbs</option>
+                        <option value="KG">kg</option>
+                    </select>
+
+                    <br />
+                    <label for="height">Height: </label>
+                    <input type="number" id="heightFeet" min="0" max="9" required>
+                    <select id="heightUnit">
+                        <option value="IN">ft</option>
+                    </select>
+                    <input type="number" id="heightInch" min="0" max="12" required>
+                    <select id="heightUnit">
+                        <option value="IN">in</option>
+                    </select>
+
+                    <br />
+                    <label for="activityLevel">Activity Level: </label>
+                    <select id="activityLevel">
+                        <option value="1.2">Sedentary (Office Job)</option>
+                        <option value="1.375">Light Exercise (1-2 days/week)</option>
+                        <option value="1.55">Medium Exercise (3-5 days/week)</option>
+                        <option value="1.725">Heavy Exercise (6-7 days/week)</option>
+                        <option value="1.9">Athlete (2x per day)</option>
+                    </select>
+
+                    <br />
+                    <label for="bf">Body Fat %</label>
+                    <input type="number" id="bodyFatPercent" min="0" max="100">% <a
+                        href="https://www.crossfitinvictus.com/wp-content/uploads/2018/09/body-fat-percentage-men-women-1024x667.png"
+                        target="_blank">Click
+                        here for picture estimate</a>
+                    <br>
+                    <label for="weightClass">Desired Weight Class:</label>
+                    <input type="number" name="weightClass" id="weightClass" min="90" max="300">
+                    <br>
+                    <label for="carbs">Carbs in normal diet?</label>
+                    <select id="carbs">
+                        <option value="yes">Yes, I eat carbs daily!</option>
+                        <option value="yes">Yes, but try to keep my carbs low.</option>
+                        <option value="no">No, very minimal carbs.</option>
+                    </select>
+                    <br>
+                    <label for="startDate">Start Date: </label>
+                    <input name="startDate" type="date" id="userSelectedStartDate">
+                    <br>
+                    <label for="weighInDate">Weigh In Date: </label>
+                    <input name="weighInDate" type="date" id="userWeighInDate">
+                    <br>
 
 
-let weighInDate = document.getElementById('userWeighInDate')
-let startDate = document.getElementById('userSelectedStartDate')
-let startWeightInput = document.getElementById('startWeight')
-let targetWeightInput = document.getElementById('targetWeight')
-let bodyFatPercentage = document.getElementById('bodyFatPercent')
-let targetDate = ''
-let dateStarted = ''
-let startWeight;
-let targetWeight;
-let weekOutWeight;
-let days;
+                </td>
+            </tr>
+
+            <tr style="text-align:center">
+                <td>
+                    <div id="submitBtnBox">
+                        <br />
+                        <button type="submit" id="submitBtn">Create Program</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="infoContainer"></div>
+
+    <div id="resultsContainer"></div>
 
 
-weighInDate.addEventListener('change', () => {
-    targetDate = document.querySelector("#userWeighInDate")
-    render();
-})
+    <div id="resultsWeightTable">
+        <table class="thead-dark, table-striped, table-bordered">
+            <tbody>
+                <tr>
+                    <th>Date</th>
+                    <th>Expected Weight</th>
+                </tr>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-startDate.addEventListener('change', () => {
-    dateStarted = document.querySelector("#userSelectedStartDate")
-})
+    <script src="index.js"></script>
+</body>
 
-startWeightInput.addEventListener('change', () => {
-    startWeight = document.getElementById('startWeight').value
-})
-
-targetWeightInput.addEventListener('change', () => {
-    targetWeight = document.getElementById('targetWeight').value
-})
-
-bodyFatPercentage.addEventListener('change', () => {
-    bodyFatPercentage = document.getElementById('bodyFatPercent').value
-})
-
-function render() {
-    getDateDifference(targetDate.value, dateStarted.value)
-    getDateRange();
-    weightLossFromCal();
-    getWeekOutData();
-    weekOfWeighIn();
-    if (document.getElementById('carbsYes').checked) {
-        document.querySelector('#weightFromCarbs').innerHTML = "Weight held from carbs: " + carbStored(startWeight, bodyFatPercentage) + " lbs"
-    }
-}
-
-function getDateDifference(start, end) {
-    if (targetDate != '' && dateStarted != '') {
-        let date1 = new Date(start);
-        let date2 = new Date(end);
-        let diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10) * -1;
-
-        let displayAmountOfDays = document.querySelector('#daysAway')
-        displayAmountOfDays.innerHTML = `Days away : ${diffDays}`;
-        days = diffDays
-        render();
-    }
-}
-
-function renderTableRow(date, expectedWeight) {
-    let tr = document.createElement('tr');
-    let tableDate = document.createElement('td');
-    let weightOnDay = document.createElement('td');
-    let table = document.querySelector("#mainTable")
-    tableDate.innerText = date
-    weightOnDay.innerText = expectedWeight
-    weightOnDay.classList.add("weightData")
-    tr.appendChild(tableDate)
-    tr.appendChild(weightOnDay)
-    table.appendChild(tr)
-}
-
-function getDateRange() {
-    for (let i = 0; i < days + 1; i++) {
-        let tempDate = new Date(dateStarted.value)
-        tempDate.setDate(tempDate.getDate() + i)
-        let dt = tempDate
-        dt = (dt.getMonth() + 1) + "/" + dt.getDate()
-        renderTableRow(dt, "0")
-    }
-}
-
-
-
-function weightLossFromCal() {
-    let tds = document.querySelectorAll('.weightData')
-    let startDelim = 0
-    for (let weightNum of tds) {
-        weightNum.innerText = roundNearestHalf(startWeight - startDelim)
-        startDelim += .15
-    }
-
-}
-
-function getWeekOutData() {
-    let weekOutNum = Math.round((targetWeight * 1.0625) * 2) / 2;
-    document.querySelector("#weekOutWeight").innerHTML = `Starting weight 7 days out: ${weekOutNum}`
-    weekOutWeight = weekOutNum
-}
-
-function weekOfWeighIn() {
-    let tds = document.querySelectorAll('.weightData')
-    let weightRemaining = (parseInt(weekOutWeight) - (parseInt(targetWeight) + 6.5)) / 3
-    let threeDayOut = parseInt(targetWeight) + 6.5
-    tds[tds.length - 7].innerText = weekOutWeight
-    tds[tds.length - 6].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining * 3)
-    tds[tds.length - 5].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining * 2)
-    tds[tds.length - 4].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining)
-    tds[tds.length - 3].innerText = threeDayOut
-    tds[tds.length - 2].innerText = parseInt(targetWeight) + 4.5
-    tds[tds.length - 1].innerText = parseInt(targetWeight) + 3
-}
+</html>
