@@ -158,12 +158,21 @@ function createBaseTable() {
     let th1 = document.createElement('th');
     let th2 = document.createElement('th');
     let th3 = document.createElement('th');
+    let th4 = document.createElement('th');
+    let th5 = document.createElement('th');
+    let th6 = document.createElement('th');
     th1.innerHTML = "Date";
     th2.innerHTML = "Expected Weight";
     th3.innerHTML = "Notes";
+    th4.innerHTML = "Water";
+    th5.innerHTML = "Carbs";
+    th6.innerHTML = "Salt";
     tr.appendChild(th1);
     tr.appendChild(th2);
     tr.appendChild(th3);
+    tr.appendChild(th4);
+    tr.appendChild(th5);
+    tr.appendChild(th6);
     table.appendChild(tr);
     table.classList.add("mainWeightTable", "table", "table-dark", "table-bordered")
     maindiv.append(table);
@@ -174,12 +183,24 @@ function renderTableRow(date, expectedWeight) {
     let tr = document.createElement('tr');
     let tableDate = document.createElement('td');
     let weightOnDay = document.createElement('td');
+    let noteData = document.createElement('td');
+    let carbData = document.createElement('td');
+    let saltData = document.createElement('td');
+    let waterData = document.createElement('td');
     let table = document.querySelector(".mainWeightTable")
     tableDate.innerText = date
+    noteData.classList.add("noteData")
+    carbData.classList.add("carbData")
+    saltData.classList.add("saltData")
+    waterData.classList.add("waterData")
     weightOnDay.innerText = expectedWeight
     weightOnDay.classList.add("weightData")
     tr.appendChild(tableDate)
     tr.appendChild(weightOnDay)
+    tr.appendChild(noteData)
+    tr.appendChild(waterData)
+    tr.appendChild(carbData)
+    tr.appendChild(saltData)
     table.appendChild(tr)
 }
 
@@ -210,6 +231,13 @@ function wipeTable(){
     maindiv.innerHTML =''
 }
 
+function addInfo(weight, weightClass){
+    weightLossFromCal(weight)
+    weekOfWeighIn(weightClass)
+    notesForWeekOf();
+    waterInfo();
+}
+
 
 function weekOfWeighIn(targetWeight) {
     let weekOutNum = Math.round((targetWeight * 1.0625) * 2) / 2;
@@ -225,6 +253,25 @@ function weekOfWeighIn(targetWeight) {
     tds[tds.length - 2].innerText = parseInt(targetWeight) + 4.5
     tds[tds.length - 1].innerText = parseInt(targetWeight) + 3
     totalDaysForCalLoss = (tds.length - 7)
+}
+
+function notesForWeekOf(){
+    let tds = document.querySelectorAll('.noteData')
+    tds[tds.length - 10].innerText = "Reduce carbs to under 20 grams per day"
+    tds[tds.length - 7].innerText = "Hyper hydration process starts!"
+    tds[tds.length - 5].innerText = "Reduce carbs to under 10 grams per day"
+    tds[tds.length - 1].innerText = "Morning sauna or bath for the last 2-3 pounds"
+}
+
+function waterInfo(){
+    let tds = document.querySelectorAll('.waterData')
+    tds[tds.length - 7].innerText = "2 Gal"
+    tds[tds.length - 6].innerText = "2 Gal"
+    tds[tds.length - 5].innerText = "2 Gal"
+    tds[tds.length - 4].innerText = "1 Gal"
+    tds[tds.length - 3].innerText = ".5 Gal"
+    tds[tds.length - 2].innerText = ".25 Gal"
+    tds[tds.length - 1].innerText = "0 Gal"
 }
 
 function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
@@ -293,9 +340,8 @@ function formSubmit() {
 
         printDatesForTable(inputs.startDate)
 
-        weightLossFromCal(inputs.weight)
+        addInfo(inputs.weight,inputs.weightClass);
 
-        weekOfWeighIn(inputs.weightClass)
     }
 }
 
