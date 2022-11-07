@@ -310,7 +310,8 @@ function saltInfo(){
     tds[tds.length - 2].innerText = "None"
     tds[tds.length - 1].innerText = "None"
 }
-</div>
+
+
 
 function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
