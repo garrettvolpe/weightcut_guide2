@@ -46,31 +46,34 @@
                     <input type="number" id="heightInch" min="0" max="12" required>
                     <p style="display:inline">inch</p>
                     <br />
+                    <div class="mobileFix">
                     <label for="activityLevel">Activity Level: </label>
-                    <select id="activityLevel">
+                    <select  id="activityLevel">
                         <option value="1.2">Sedentary (Office Job)</option>
                         <option value="1.375">Light Exercise (1-2 days/week)</option>
                         <option value="1.55" selected>Medium Exercise (3-5 days/week)</option>
                         <option value="1.725">Heavy Exercise (6-7 days/week)</option>
                         <option value="1.9">Athlete (2x per day)</option>
                     </select>
-
+                    </div>
                     <br />
                     <label for="bf">Body Fat %</label>
-                    <input type="number" id="bodyFatPercent" min="0" max="100">% <a
-                        href="https://www.crossfitinvictus.com/wp-content/uploads/2018/09/body-fat-percentage-men-women-1024x667.png"
-                        target="_blank">Click
+                    <input type="number" id="bodyFatPercent" min="0" max="100">%
+                    <a href="https://www.crossfitinvictus.com/wp-content/uploads/2018/09/body-fat-percentage-men-women-1024x667.png"
+                        target="_blank" class="mobileFix">Click
                         here for picture estimate</a>
                     <br>
                     <label for="weightClass">Desired Weight Class:</label>
                     <input type="number" name="weightClass" id="weightClass" min="90" max="300">
                     <br>
+                    <div class="mobileFix">
                     <label for="carbs">Carbs in normal diet?</label>
                     <select id="carbs">
                         <option value="yes">Yes, I eat carbs daily!</option>
                         <option value="yes">Yes, but try to keep my carbs low.</option>
                         <option value="no">No, very minimal if any carbs.</option>
                     </select>
+                    </div>
                     <br>
                     <label for="startDate">Start Date: </label>
                     <input name="startDate" type="date" id="userSelectedStartDate">

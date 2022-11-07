@@ -2,7 +2,7 @@ body,
 select,
 button {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 15px;
+    font-size: .9em;
     color: #003F2E;
 }
 
@@ -11,6 +11,7 @@ button {
     background-color: #003F2E;
     color: #E6E6DE;
     border-radius: 5px;
+    font-size: 1.25em;
 }
 
 body {
@@ -76,5 +77,9 @@ h4,h5 {
 @media only screen and (max-width: 600px) {
     body {
       background-color: lightblue;
+    }
+    .mobileFix {
+        text-align: center;
+        display: block;
     }
   }
