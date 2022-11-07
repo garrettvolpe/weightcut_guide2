@@ -157,10 +157,13 @@ function createBaseTable() {
     let tr = document.createElement('tr');
     let th1 = document.createElement('th');
     let th2 = document.createElement('th');
+    let th3 = document.createElement('th');
     th1.innerHTML = "Date";
     th2.innerHTML = "Expected Weight";
+    th3.innerHTML = "Notes";
     tr.appendChild(th1);
     tr.appendChild(th2);
+    tr.appendChild(th3);
     table.appendChild(tr);
     table.classList.add("mainWeightTable", "table", "table-dark", "table-bordered")
     maindiv.append(table);

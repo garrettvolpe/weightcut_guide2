@@ -40,6 +40,11 @@ body {
     visibility: collapse;
 }
 
+#resultsWeightTable {
+    min-width: 75%;
+    padding: 0;
+    margin-: 0;
+}
 
 label {
     display: inline-block;
