@@ -1,0 +1,114 @@
+let today = new Date();
+
+
+let weighInDate = document.getElementById('userWeighInDate')
+let startDate = document.getElementById('userSelectedStartDate')
+let startWeightInput = document.getElementById('startWeight')
+let targetWeightInput = document.getElementById('targetWeight')
+let bodyFatPercentage = document.getElementById('bodyFatPercent')
+let targetDate = ''
+let dateStarted = ''
+let startWeight;
+let targetWeight;
+let weekOutWeight;
+let days;
+
+
+weighInDate.addEventListener('change', () => {
+    targetDate = document.querySelector("#userWeighInDate")
+    render();
+})
+
+startDate.addEventListener('change', () => {
+    dateStarted = document.querySelector("#userSelectedStartDate")
+})
+
+startWeightInput.addEventListener('change', () => {
+    startWeight = document.getElementById('startWeight').value
+})
+
+targetWeightInput.addEventListener('change', () => {
+    targetWeight = document.getElementById('targetWeight').value
+})
+
+bodyFatPercentage.addEventListener('change', () => {
+    bodyFatPercentage = document.getElementById('bodyFatPercent').value
+})
+
+function render() {
+    getDateDifference(targetDate.value, dateStarted.value)
+    getDateRange();
+    weightLossFromCal();
+    getWeekOutData();
+    weekOfWeighIn();
+    if (document.getElementById('carbsYes').checked) {
+        document.querySelector('#weightFromCarbs').innerHTML = "Weight held from carbs: " + carbStored(startWeight, bodyFatPercentage) + " lbs"
+    }
+}
+
+function getDateDifference(start, end) {
+    if (targetDate != '' && dateStarted != '') {
+        let date1 = new Date(start);
+        let date2 = new Date(end);
+        let diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10) * -1;
+
+        let displayAmountOfDays = document.querySelector('#daysAway')
+        displayAmountOfDays.innerHTML = `Days away : ${diffDays}`;
+        days = diffDays
+        render();
+    }
+}
+
+function renderTableRow(date, expectedWeight) {
+    let tr = document.createElement('tr');
+    let tableDate = document.createElement('td');
+    let weightOnDay = document.createElement('td');
+    let table = document.querySelector("#mainTable")
+    tableDate.innerText = date
+    weightOnDay.innerText = expectedWeight
+    weightOnDay.classList.add("weightData")
+    tr.appendChild(tableDate)
+    tr.appendChild(weightOnDay)
+    table.appendChild(tr)
+}
+
+function getDateRange() {
+    for (let i = 0; i < days + 1; i++) {
+        let tempDate = new Date(dateStarted.value)
+        tempDate.setDate(tempDate.getDate() + i)
+        let dt = tempDate
+        dt = (dt.getMonth() + 1) + "/" + dt.getDate()
+        renderTableRow(dt, "0")
+    }
+}
+
+
+
+function weightLossFromCal() {
+    let tds = document.querySelectorAll('.weightData')
+    let startDelim = 0
+    for (let weightNum of tds) {
+        weightNum.innerText = roundNearestHalf(startWeight - startDelim)
+        startDelim += .15
+    }
+
+}
+
+function getWeekOutData() {
+    let weekOutNum = Math.round((targetWeight * 1.0625) * 2) / 2;
+    document.querySelector("#weekOutWeight").innerHTML = `Starting weight 7 days out: ${weekOutNum}`
+    weekOutWeight = weekOutNum
+}
+
+function weekOfWeighIn() {
+    let tds = document.querySelectorAll('.weightData')
+    let weightRemaining = (parseInt(weekOutWeight) - (parseInt(targetWeight) + 6.5)) / 3
+    let threeDayOut = parseInt(targetWeight) + 6.5
+    tds[tds.length - 7].innerText = weekOutWeight
+    tds[tds.length - 6].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining * 3)
+    tds[tds.length - 5].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining * 2)
+    tds[tds.length - 4].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining)
+    tds[tds.length - 3].innerText = threeDayOut
+    tds[tds.length - 2].innerText = parseInt(targetWeight) + 4.5
+    tds[tds.length - 1].innerText = parseInt(targetWeight) + 3
+}
