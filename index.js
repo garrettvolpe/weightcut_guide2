@@ -16,6 +16,8 @@ const MALE_CAL_MODIFIER = 5;
 const FEMALE_CAL_MODIFIER = -161;
 
 let days;
+let weekOutWeight;
+let totalDaysForCalLoss;
 
 
 function validateFormInputs(inputs) {
@@ -200,6 +202,27 @@ function weightLossFromCal(startWeight) {
     }
 }
 
+function wipeTable(){
+    let maindiv = document.querySelector('#resultsWeightTable')
+    maindiv.innerHTML =''
+}
+
+
+function weekOfWeighIn(targetWeight) {
+    let weekOutNum = Math.round((targetWeight * 1.0625) * 2) / 2;
+    weekOutWeight = weekOutNum
+    let tds = document.querySelectorAll('.weightData')
+    let weightRemaining = (parseInt(weekOutWeight) - (parseInt(targetWeight) + 6.5)) / 3
+    let threeDayOut = parseInt(targetWeight) + 6.5
+    tds[tds.length - 7].innerText = weekOutWeight
+    tds[tds.length - 6].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining * 3)
+    tds[tds.length - 5].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining * 2)
+    tds[tds.length - 4].innerText = roundNearestHalf(parseInt(threeDayOut) + weightRemaining)
+    tds[tds.length - 3].innerText = threeDayOut
+    tds[tds.length - 2].innerText = parseInt(targetWeight) + 4.5
+    tds[tds.length - 1].innerText = parseInt(targetWeight) + 3
+    totalDaysForCalLoss = (tds.length - 7)
+}
 
 function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
@@ -259,6 +282,8 @@ function formSubmit() {
 
         const carbWeight = carbStored(inputs.weight, inputs.bodyFatPercent);
 
+        wipeTable();
+
         printOutput(TDEE, carbWeight, inputs.gender, inputs.startDate, inputs.weighInDate);
 
         createBaseTable();
@@ -266,6 +291,8 @@ function formSubmit() {
         printDatesForTable(inputs.startDate)
 
         weightLossFromCal(inputs.weight)
+
+        weekOfWeighIn(inputs.weightClass)
     }
 }
 
