@@ -216,11 +216,8 @@ function printDatesForTable(startDate) {
 
 function weightLossFromCal(startWeight) {
     let tds = document.querySelectorAll('.weightData')
-    console.log(tds)
     let startDelim = 0
     for (let weightNum of tds) {
-        console.log(startWeight)
-        console.log(startDelim)
         weightNum.innerText = roundNearestHalf(startWeight - startDelim)
         startDelim += .15
     }
@@ -236,6 +233,8 @@ function addInfo(weight, weightClass){
     weekOfWeighIn(weightClass)
     notesForWeekOf();
     waterInfo();
+    carbInfo();
+    saltInfo();
 }
 
 
@@ -265,7 +264,10 @@ function notesForWeekOf(){
 
 function waterInfo(){
     let tds = document.querySelectorAll('.waterData')
-    tds[tds.length - 7].innerText = "2 Gal"
+    for (let td of tds){
+        td.innerText = "1 Gal"
+    }
+    tds[tds.length - 7].innerHTML = "2 Gal"
     tds[tds.length - 6].innerText = "2 Gal"
     tds[tds.length - 5].innerText = "2 Gal"
     tds[tds.length - 4].innerText = "1 Gal"
@@ -273,6 +275,42 @@ function waterInfo(){
     tds[tds.length - 2].innerText = ".25 Gal"
     tds[tds.length - 1].innerText = "0 Gal"
 }
+
+function carbInfo(){
+    let tds = document.querySelectorAll('.carbData')
+    for (let td of tds){
+        td.innerText = "Normal"
+    }
+    tds[tds.length - 10].innerText = "> 20G"
+    tds[tds.length - 9].innerText = "> 20G"
+    tds[tds.length - 8].innerText = "> 20G"
+    tds[tds.length - 7].innerText = "> 20G"
+    tds[tds.length - 6].innerText = "> 20G"
+    tds[tds.length - 5].innerText = "> 10G"
+    tds[tds.length - 4].innerText = "> 10G"
+    tds[tds.length - 3].innerText = "0G"
+    tds[tds.length - 2].innerText = "0G"
+    tds[tds.length - 1].innerText = "0G"
+}
+
+function saltInfo(){
+    console.log("test1")
+    let tds = document.querySelectorAll('.saltData')
+    for (let td of tds){
+        td.innerText = "Normal"
+    }
+    console.log("test2")
+
+    tds[tds.length - 8].innerText = "Normal/High"
+    tds[tds.length - 7].innerText = "High"
+    tds[tds.length - 6].innerText = "High"
+    tds[tds.length - 5].innerText = "Normal/High"
+    tds[tds.length - 4].innerText = "Normal"
+    tds[tds.length - 3].innerText = "None"
+    tds[tds.length - 2].innerText = "None"
+    tds[tds.length - 1].innerText = "None"
+}
+
 
 function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
