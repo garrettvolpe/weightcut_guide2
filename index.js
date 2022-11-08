@@ -27,6 +27,7 @@ let lbsPerWeek;
 let calData;
 let myTDEE;
 
+let dayOfWeightCut = .0195;
 
 function validateFormInputs(inputs) {
     inputs.age = parseInt(document.querySelector("#age").value);
