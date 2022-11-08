@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weight Cut Guide</title>
     <link rel="stylesheet" href="index.css">
@@ -15,7 +15,8 @@
                 <td>
                     <h1>Weight Cut Guide</h1>
                     <h4>(24 hour before weigh-ins)</h4>
-                    <h5><a href="https://drive.google.com/file/d/1nblzGr_Zi2oP8TNy8wP2ppF6EAPBDO7j/view?usp=sharing" target="_blank">Link to info PDF</a></h5>
+                    <h5><a href="https://drive.google.com/file/d/1nblzGr_Zi2oP8TNy8wP2ppF6EAPBDO7j/view?usp=sharing"
+                            target="_blank">Link to info PDF</a></h5>
                 </td>
             </tr>
 
@@ -47,16 +48,15 @@
                     <p style="display:inline">inch</p>
                     <br />
                     <div class="mobileFix">
-                    <label for="activityLevel">Activity Level: </label>
-                    <select  id="activityLevel">
-                        <option value="1.2">Sedentary (Office Job)</option>
-                        <option value="1.375">Light Exercise (1-2 days/week)</option>
-                        <option value="1.55" selected>Medium Exercise (3-5 days/week)</option>
-                        <option value="1.725">Heavy Exercise (6-7 days/week)</option>
-                        <option value="1.9">Athlete (2x per day)</option>
-                    </select>
+                        <label for="activityLevel">Activity Level: </label>
+                        <select id="activityLevel">
+                            <option value="1.2">Sedentary (Office Job)</option>
+                            <option value="1.375">Light Exercise (1-2 days/week)</option>
+                            <option value="1.55" selected>Medium Exercise (3-5 days/week)</option>
+                            <option value="1.725">Heavy Exercise (6-7 days/week)</option>
+                            <option value="1.9">Athlete (2x per day)</option>
+                        </select>
                     </div>
-                    <br />
                     <label for="bf">Body Fat %</label>
                     <input type="number" id="bodyFatPercent" min="0" max="100">%
                     <a href="https://www.crossfitinvictus.com/wp-content/uploads/2018/09/body-fat-percentage-men-women-1024x667.png"
@@ -67,14 +67,13 @@
                     <input type="number" name="weightClass" id="weightClass" min="90" max="300">
                     <br>
                     <div class="mobileFix">
-                    <label for="carbs">Carbs in normal diet?</label>
-                    <select id="carbs">
-                        <option value="yes">Yes, I eat carbs daily!</option>
-                        <option value="yes">Yes, but try to keep my carbs low.</option>
-                        <option value="no">No, very minimal if any carbs.</option>
-                    </select>
+                        <label for="carbs">Carbs in normal diet?</label>
+                        <select id="carbs">
+                            <option value="yes">Yes, I eat carbs daily!</option>
+                            <option value="yes">Yes, but try to keep my carbs low.</option>
+                            <option value="no">No, very minimal if any carbs.</option>
+                        </select>
                     </div>
-                    <br>
                     <label for="startDate">Start Date: </label>
                     <input name="startDate" type="date" id="userSelectedStartDate">
                     <br>
@@ -101,25 +100,21 @@
 
     <div id="resultsContainer"></div>
 
-
-    <div id="resultsWeightTable">
-
-        <!-- <table class="thead-dark, table-striped, table-bordered">
-            <tbody>
-                <tr>
-                    <th>Date</th>
-                    <th>Expected Weight</th>
-                </tr>
-                <tr>
-                </tr>
-            </tbody>
-        </table> -->
-    </div>
+    <div id="errorStatsChangeNeeded"></div>
+    <div id="resultsWeightTable"></div>
 
     <script src="index.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="index.css">
 </body>
 

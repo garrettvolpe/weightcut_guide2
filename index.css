@@ -22,6 +22,7 @@ body {
 #inputsContainer,
 #resultsContainer,
 #resultsWeightTable,
+#errorStatsChangeNeeded,
 #infoContainer {
     background-color: #E6E6DE;
     color: #003F2E;
@@ -34,7 +35,8 @@ body {
 
 #resultsContainer,
 #resultsWeightTable,
-#infoContainer {
+#infoContainer,
+#errorStatsChangeNeeded {
     text-align: center;
     line-height: 150%;
     padding: 5px 0px 5px 0px;
@@ -60,13 +62,14 @@ h1 {
     margin: 0;
 }
 
-h4,h5 {
+h4,
+h5 {
     margin: 0px;
     padding: 0px;
 }
 
 
-.standOut{
+.standOut {
     color: red;
 
 }
@@ -74,14 +77,14 @@ h4,h5 {
 
 
 @media only screen and (max-width: 600px) {
-    body {
-    }
+    body {}
+
     .mobileFix {
         text-align: center;
         display: block;
     }
-    
+
     #resultsWeightTable {
         min-width: 100%
     }
-  }
+}

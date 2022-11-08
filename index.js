@@ -3,6 +3,7 @@ window.onload = () => {
     document.querySelector("#resultsContainer").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
     document.querySelector("#infoContainer").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
     document.querySelector("#resultsWeightTable").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
+    document.querySelector("#errorStatsChangeNeeded").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
 };
 
 const KILOGRAMS_PER_POUND = 0.4536;
@@ -18,6 +19,10 @@ const FEMALE_CAL_MODIFIER = -161;
 let days;
 let weekOutWeight;
 let totalDaysForCalLoss;
+let startingWeight;
+let weightClass;
+let minWeightLossPerWeekNum;
+let isPossible;
 
 
 function validateFormInputs(inputs) {
@@ -109,9 +114,13 @@ function calculateTDEEwithBF(gender, weight, weightUnit, bodyFatPercent, activit
 
     const safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
 
+
+
     if (weightUnit === "LBS") {
         weight *= KILOGRAMS_PER_POUND;
     }
+
+
 
     const LBM = (100 - bodyFatPercent) * 0.01 * weight;
     const BMR = (21.6 * LBM) + 370;
@@ -121,6 +130,12 @@ function calculateTDEEwithBF(gender, weight, weightUnit, bodyFatPercent, activit
     return TDEE;
 }
 
+function assignGlobalVar(targetWeight, weight) {
+    weightClass = targetWeight
+    startingWeight = weight;
+    let weekOutNum = Math.round((weightClass * 1.0625) * 2) / 2;
+    weekOutWeight = weekOutNum
+}
 
 
 function carbStored(weight, bodyfat) {
@@ -133,9 +148,11 @@ function carbStored(weight, bodyfat) {
         muscleStored = (leanBodyMass * .015)
     }
     else if (parseFloat(bodyfat) < .15) {
+
         muscleStored = (leanBodyMass * .02)
     }
-    return (muscleStored + liverStored).toFixed(2)
+    let myReturn = (muscleStored + liverStored).toFixed(2)
+    return (muscleStored + liverStored).toFixed(2);
 }
 
 function getDaysUntilWeighIn(start, end) {
@@ -149,7 +166,6 @@ function getDaysUntilWeighIn(start, end) {
 function roundNearestHalf(num) {
     return Math.round(num * 2) / 2;
 }
-
 
 function createBaseTable() {
     let maindiv = document.querySelector('#resultsWeightTable');
@@ -207,6 +223,7 @@ function renderTableRow(date, expectedWeight) {
 function printDatesForTable(startDate) {
     for (let i = 0; i < days + 1; i++) {
         let tempDate = new Date(startDate)
+        tempDate.setDate(tempDate.getDate() + 1)
         tempDate.setDate(tempDate.getDate() + i)
         let dt = tempDate
         dt = (dt.getMonth() + 1) + "/" + dt.getDate()
@@ -219,16 +236,16 @@ function weightLossFromCal(startWeight) {
     let startDelim = 0
     for (let weightNum of tds) {
         weightNum.innerText = roundNearestHalf(startWeight - startDelim)
-        startDelim += .15
+        startDelim += caloricWeightLossNeededPerDay();
     }
 }
 
-function wipeTable(){
+function wipeTable() {
     let maindiv = document.querySelector('#resultsWeightTable')
-    maindiv.innerHTML =''
+    maindiv.innerHTML = ''
 }
 
-function addInfo(weight, weightClass){
+function addInfo(weight, weightClass) {
     weightLossFromCal(weight)
     weekOfWeighIn(weightClass)
     notesForWeekOf();
@@ -237,10 +254,7 @@ function addInfo(weight, weightClass){
     saltInfo();
 }
 
-
 function weekOfWeighIn(targetWeight) {
-    let weekOutNum = Math.round((targetWeight * 1.0625) * 2) / 2;
-    weekOutWeight = weekOutNum
     let tds = document.querySelectorAll('.weightData')
     let weightRemaining = (parseInt(weekOutWeight) - (parseInt(targetWeight) + 6.5)) / 3
     let threeDayOut = parseInt(targetWeight) + 6.5
@@ -251,10 +265,9 @@ function weekOfWeighIn(targetWeight) {
     tds[tds.length - 3].innerText = threeDayOut
     tds[tds.length - 2].innerText = parseInt(targetWeight) + 4.5
     tds[tds.length - 1].innerText = parseInt(targetWeight) + 3
-    totalDaysForCalLoss = (tds.length - 7)
 }
 
-function notesForWeekOf(){
+function notesForWeekOf() {
     let tds = document.querySelectorAll('.noteData')
     tds[tds.length - 10].innerText = "Reduce carbs to under 20 grams per day"
     tds[tds.length - 7].innerText = "Hyper hydration process starts!"
@@ -262,9 +275,9 @@ function notesForWeekOf(){
     tds[tds.length - 1].innerText = "Morning sauna or bath for the last 2-3 pounds"
 }
 
-function waterInfo(){
+function waterInfo() {
     let tds = document.querySelectorAll('.waterData')
-    for (let td of tds){
+    for (let td of tds) {
         td.innerText = "1 Gal"
     }
     tds[tds.length - 7].innerHTML = "2 Gal"
@@ -276,9 +289,9 @@ function waterInfo(){
     tds[tds.length - 1].innerText = "0 Gal"
 }
 
-function carbInfo(){
+function carbInfo() {
     let tds = document.querySelectorAll('.carbData')
-    for (let td of tds){
+    for (let td of tds) {
         td.innerText = "Normal"
     }
     tds[tds.length - 10].innerText = "> 20G"
@@ -293,13 +306,11 @@ function carbInfo(){
     tds[tds.length - 1].innerText = "0G"
 }
 
-function saltInfo(){
-    console.log("test1")
+function saltInfo() {
     let tds = document.querySelectorAll('.saltData')
-    for (let td of tds){
+    for (let td of tds) {
         td.innerText = "Normal"
     }
-    console.log("test2")
 
     tds[tds.length - 8].innerText = "Normal/High"
     tds[tds.length - 7].innerText = "High"
@@ -312,6 +323,26 @@ function saltInfo(){
 }
 
 
+function addCalorieInfo() {
+
+}
+
+function caloricWeightLossNeededPerDay() {
+    let tds = document.querySelectorAll('.weightData')
+    totalDaysForCalLoss = (tds.length - 7)
+    totalAmountToLose = startingWeight - weekOutWeight
+    minWeightLossPerWeek = totalAmountToLose / (totalDaysForCalLoss / 7)
+    minWeightLossPerWeekNum = minWeightLossPerWeek
+    if ((minWeightLossPerWeekNum) > 2) {
+        // console.log("suggested to move up weight class or increase time until comp")
+        isPossible = false
+        return parseFloat(minWeightLossPerWeek / 7)
+    }
+    else if (minWeightLossPerWeekNum < 2) {
+        isPossible = true
+        return parseFloat(minWeightLossPerWeekNum / 7)
+    }
+}
 
 function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
@@ -329,7 +360,7 @@ function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
         To lose 1.5 lbs / week, eat <strong> ${Math.max(TDEE - 750, safeMinCalories)}</strong> calories per day<br>
         To lose 1 lbs / week, eat <strong> ${Math.max(TDEE - 500, safeMinCalories)}</strong> calories per day.<br>`;
 
-
+    let errorStats = `<h3>Cannot provide a table for you as it is strongly recommend to go up a weight class or increase the time until competition.</h3>`
 
 
 
@@ -337,7 +368,7 @@ function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     document.querySelector("#resultsContainer").innerHTML = resultsHTML.replace(safeMinCaloriesRegex, `<abbr title = '${((gender === "M") ? "Men" : "Women")} are not advised to consume less than ${safeMinCalories} calories per day.'> ${safeMinCalories}</abbr>`);
     document.querySelector("#infoContainer").innerHTML = infoHTML.replace(safeMinCaloriesRegex, `< abbr title = '${((gender === "M") ? "Men" : "Women")} are not advised to consume less than ${safeMinCalories} calories per day.' > ${safeMinCalories}</abbr > `);
 
-    // document.querySelector("#resultsWeightTable").innerHTML = weightTableHTML;
+    document.querySelector("#errorStatsChangeNeeded").innerHTML = errorStats;
 
     document.querySelector("#resultsContainer").style.visibility = "visible";
     document.querySelector("#infoContainer").style.visibility = "visible";
@@ -367,6 +398,9 @@ function formSubmit() {
         return;
     }
     else {
+
+        assignGlobalVar(inputs.weightClass, inputs.weight);
+
         const TDEE = (inputs.bodyFatEntered) ? calculateTDEEwithBF(inputs.gender, inputs.weight, inputs.weightUnit, inputs.bodyFatPercent, inputs.activityLevel) : calculateTDEEnoBF(inputs.gender, inputs.age, inputs.weight, inputs.weightUnit, inputs.height, inputs.heightUnit, inputs.activityLevel);
 
         const carbWeight = carbStored(inputs.weight, inputs.bodyFatPercent);
@@ -379,8 +413,17 @@ function formSubmit() {
 
         printDatesForTable(inputs.startDate)
 
-        addInfo(inputs.weight,inputs.weightClass);
+        addInfo(inputs.weight, inputs.weightClass);
 
+        if (isPossible) {
+            document.querySelector("#errorStatsChangeNeeded").style.visibility = "collapse";
+
+        }
+        else {
+            console.log(isPossible)
+            document.querySelector("#resultsWeightTable").style.visibility = "collapse";
+            document.querySelector("#errorStatsChangeNeeded").style.visibility = "visible";
+        }
     }
 }
 
