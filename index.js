@@ -111,7 +111,7 @@ function calculateTDEEnoBF(gender, age, weight, weightUnit, height, activityMult
 
 
 
-function calculateTDEEwithBF(gender, weight, weightUnit, bodyFatPercent, activityMultiplier) {
+function calculateTDEEwithBF(gender, weight, bodyFatPercent, activityMultiplier) {
     // Katch-McArdle
     // Katch = 370 + (21.6 * LBM)
     // where LBM is lean body mass 
@@ -119,18 +119,12 @@ function calculateTDEEwithBF(gender, weight, weightUnit, bodyFatPercent, activit
     const safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
 
 
-
-    if (weightUnit === "LBS") {
-        weight *= KILOGRAMS_PER_POUND;
-    }
-
-
+    weight *= KILOGRAMS_PER_POUND;
 
     const LBM = (100 - bodyFatPercent) * 0.01 * weight;
     const BMR = (21.6 * LBM) + 370;
 
     const TDEE = Math.round(BMR * activityMultiplier);
-
     myTDEE = TDEE
     return TDEE;
 }
@@ -250,12 +244,12 @@ function wipeTable() {
     maindiv.innerHTML = ''
 }
 
-function addInfo(weight, weightClass) {
+function addInfo(weight, weightClass, gender, bodyFatPercent, activityLevel) {
     weightLossFromCal(weight)
     weekOfWeighIn(weightClass)
     waterInfo();
     carbInfo();
-    addCalorieInfo();
+    addCalorieInfo(gender, bodyFatPercent, activityLevel);
     saltInfo();
     notesForWeekOf();
 
@@ -330,26 +324,32 @@ function saltInfo() {
 }
 
 
-function addCalorieInfo() {
+function addCalorieInfo(gender, bodyFatPercent, activityLevel) {
+    let calLoss;
     if (minWeightLossPerWeekNum < 2 && minWeightLossPerWeekNum > 1.5) {
-        calData = (myTDEE - 1000)
+        calLoss = 1000
     }
     if (minWeightLossPerWeekNum < 1.5 && minWeightLossPerWeekNum > 1) {
-        calData = (myTDEE - 750)
+        calLoss = 750
     }
     if (minWeightLossPerWeekNum < 1 && minWeightLossPerWeekNum > .5) {
-        calData = (myTDEE - 500)
+        calLoss = 500
     }
     if (minWeightLossPerWeekNum < .5 && minWeightLossPerWeekNum > .1) {
-        calData = (myTDEE - 250)
+        calLoss = 250
     }
     if (minWeightLossPerWeekNum < 0) {
-        calData = myTDEE
+        calLoss = 0
     }
     let tds = document.querySelectorAll('.noteData')
-    for (let td of tds) {
-        td.innerText = `Total daily calories: ${calData}`
-    }
+    tds.forEach(function(td, i) {
+        let currentWieghts = document.querySelectorAll('.weightData')
+        let currentWeight = currentWieghts[i].innerText
+        let newTDEE = calculateTDEEwithBF(gender, currentWeight, bodyFatPercent, activityLevel)
+        let calRequirement = newTDEE - calLoss
+        console.log(calRequirement)
+        td.innerText = `Total daily calories: ${calRequirement}`
+    })
 
 
 }
@@ -361,7 +361,6 @@ function caloricWeightLossNeededPerDay() {
     minWeightLossPerWeek = totalAmountToLose / (totalDaysForCalLoss / 7)
     minWeightLossPerWeekNum = minWeightLossPerWeek
     if ((minWeightLossPerWeekNum) > 2) {
-        // console.log("suggested to move up weight class or increase time until comp")
         isPossible = false
         return parseFloat(minWeightLossPerWeek / 7)
     }
@@ -428,7 +427,7 @@ function formSubmit() {
 
         assignGlobalVar(inputs.weightClass, inputs.weight);
 
-        const TDEE = (inputs.bodyFatEntered) ? calculateTDEEwithBF(inputs.gender, inputs.weight, inputs.weightUnit, inputs.bodyFatPercent, inputs.activityLevel) : calculateTDEEnoBF(inputs.gender, inputs.age, inputs.weight, inputs.weightUnit, inputs.height, inputs.heightUnit, inputs.activityLevel);
+        const TDEE = (inputs.bodyFatEntered) ? calculateTDEEwithBF(inputs.gender, inputs.weight, inputs.bodyFatPercent, inputs.activityLevel) : calculateTDEEnoBF(inputs.gender, inputs.age, inputs.weight, inputs.weightUnit, inputs.height, inputs.heightUnit, inputs.activityLevel);
 
         const carbWeight = carbStored(inputs.weight, inputs.bodyFatPercent);
 
@@ -440,14 +439,13 @@ function formSubmit() {
 
         printDatesForTable(inputs.startDate)
 
-        addInfo(inputs.weight, inputs.weightClass);
+        addInfo(inputs.weight, inputs.weightClass,inputs.gender,inputs.bodyFatPercent, inputs.activityLevel);
 
         if (isPossible) {
             document.querySelector("#errorStatsChangeNeeded").style.visibility = "collapse";
 
         }
         else {
-            console.log(isPossible)
             document.querySelector("#resultsWeightTable").style.visibility = "collapse";
             document.querySelector("#errorStatsChangeNeeded").style.visibility = "visible";
         }
