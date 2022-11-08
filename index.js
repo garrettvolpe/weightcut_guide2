@@ -171,18 +171,21 @@ function createBaseTable() {
     let th4 = document.createElement('th');
     let th5 = document.createElement('th');
     let th6 = document.createElement('th');
+    let th7 = document.createElement('th');
     th1.innerHTML = "Date";
     th2.innerHTML = "Expected Weight";
-    th3.innerHTML = "Notes";
+    th3.innerHTML = "Calories";
     th4.innerHTML = "Water";
     th5.innerHTML = "Carbs";
     th6.innerHTML = "Salt";
+    th7.innerHTML = "Notes";
     tr.appendChild(th1);
     tr.appendChild(th2);
     tr.appendChild(th3);
     tr.appendChild(th4);
     tr.appendChild(th5);
     tr.appendChild(th6);
+    tr.appendChild(th7);
     table.appendChild(tr);
     table.classList.add("mainWeightTable", "table", "table-dark", "table-bordered")
     maindiv.append(table);
@@ -197,9 +200,11 @@ function renderTableRow(date, expectedWeight) {
     let carbData = document.createElement('td');
     let saltData = document.createElement('td');
     let waterData = document.createElement('td');
+    let calorieData = document.createElement('td');
     let table = document.querySelector(".mainWeightTable")
     tableDate.innerText = date
     noteData.classList.add("noteData")
+    calorieData.classList.add("calData")
     carbData.classList.add("carbData")
     saltData.classList.add("saltData")
     waterData.classList.add("waterData")
@@ -207,10 +212,11 @@ function renderTableRow(date, expectedWeight) {
     weightOnDay.classList.add("weightData")
     tr.appendChild(tableDate)
     tr.appendChild(weightOnDay)
-    tr.appendChild(noteData)
+    tr.appendChild(calorieData)
     tr.appendChild(waterData)
     tr.appendChild(carbData)
     tr.appendChild(saltData)
+    tr.appendChild(noteData)
     table.appendChild(tr)
 }
 
@@ -282,7 +288,7 @@ function waterInfo() {
     tds[tds.length - 4].innerText = "1 Gal"
     tds[tds.length - 3].innerText = ".5 Gal"
     tds[tds.length - 2].innerText = ".25 Gal"
-    tds[tds.length - 1].innerText = "0 Gal"
+    tds[tds.length - 1].innerText = "No Water"
 }
 
 function carbInfo() {
@@ -290,13 +296,13 @@ function carbInfo() {
     for (let td of tds) {
         td.innerText = "Normal"
     }
-    tds[tds.length - 10].innerText = "> 20G"
-    tds[tds.length - 9].innerText = "> 20G"
-    tds[tds.length - 8].innerText = "> 20G"
-    tds[tds.length - 7].innerText = "> 20G"
-    tds[tds.length - 6].innerText = "> 20G"
-    tds[tds.length - 5].innerText = "> 10G"
-    tds[tds.length - 4].innerText = "> 10G"
+    tds[tds.length - 10].innerText = "< 20G"
+    tds[tds.length - 9].innerText = "< 20G"
+    tds[tds.length - 8].innerText = "< 20G"
+    tds[tds.length - 7].innerText = "< 20G"
+    tds[tds.length - 6].innerText = "< 20G"
+    tds[tds.length - 5].innerText = "< 10G"
+    tds[tds.length - 4].innerText = "< 10G"
     tds[tds.length - 3].innerText = "0G"
     tds[tds.length - 2].innerText = "0G"
     tds[tds.length - 1].innerText = "0G"
@@ -335,14 +341,14 @@ function addCalorieInfo(gender, bodyFatPercent, activityLevel) {
     if (minWeightLossPerWeekNum < 0) {
         calLoss = 0
     }
-    let tds = document.querySelectorAll('.noteData')
+    let tds = document.querySelectorAll('.calData')
     tds.forEach(function(td, i) {
         let currentWieghts = document.querySelectorAll('.weightData')
         let currentWeight = currentWieghts[i].innerText
         let newTDEE = calculateTDEEwithBF(gender, currentWeight, bodyFatPercent, activityLevel)
         let calRequirement = newTDEE - calLoss
         console.log(calRequirement)
-        td.innerText = `Total daily calories: ${calRequirement}`
+        td.innerText = `${calRequirement}`
     })
 
 
