@@ -75,11 +75,9 @@ function validateFormInputs(inputs) {
 
     // getting values of dropdowns
     const gender = document.querySelector("#gender");
-    const weightUnit = document.querySelector("#weightUnit");
     const activityLevel = document.querySelector("#activityLevel");
 
     inputs.gender = gender.options[gender.selectedIndex].value;
-    inputs.weightUnit = weightUnit.options[weightUnit.selectedIndex].value;
     inputs.activityLevel = activityLevel.options[activityLevel.selectedIndex].value;
 
     return true;

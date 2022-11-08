@@ -1,22 +1,58 @@
+
+
 body,
 select,
 button {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: .9em;
-    color: #003F2E;
 }
 
 button {
     margin-bottom: 1em;
-    background-color: #003F2E;
-    color: #E6E6DE;
+    background-color: #CE6843;
+    color: #F4E9E5;
     border-radius: 5px;
     font-size: 1.25em;
 }
 
 body {
-    background-color: #003F2E;
-    margin-top: 1em;
+    background-color:#558274
+    ;
+    margin-top: 0em;
+}
+
+nav{
+    background-color:#CE6843;
+    color:#F4E9E5;
+    margin-top: 0;
+    margin-bottom: 2em;
+    
+}
+.navbar-nav a{
+    color:#F4E9E5 ;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    font-size: 2em;
+}
+
+.navbar-brand{
+    color: #122D24;
+    font-size: 2em;
+    margin-left: 2%;
+    font-style: italic;
+}
+
+.navButton{
+    background-color: white;
+    color: white;
+    border: 2px black solid;
 }
 
 #inputsContainer,
@@ -24,8 +60,8 @@ body {
 #resultsWeightTable,
 #errorStatsChangeNeeded,
 #infoContainer {
-    background-color: #E6E6DE;
-    color: #003F2E;
+    background-color: #F4E9E5;
+    color:#0B310A;
     border-radius: 10px;
     display: table;
     margin-left: auto;
