@@ -124,4 +124,12 @@ h5 {
     #resultsWeightTable {
         min-width: 100%
     }
+
+    .navbar-brand{
+        color: #122D24;
+        font-size: 2em;
+        margin: auto;
+        font-style: italic;
+    }
+
 }
