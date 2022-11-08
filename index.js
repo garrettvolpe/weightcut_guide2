@@ -23,6 +23,9 @@ let startingWeight;
 let weightClass;
 let minWeightLossPerWeekNum;
 let isPossible;
+let lbsPerWeek;
+let calData;
+let myTDEE;
 
 
 function validateFormInputs(inputs) {
@@ -103,6 +106,7 @@ function calculateTDEEnoBF(gender, age, weight, weightUnit, height, activityMult
     const TDEE = Math.max(safeMinCalories, Math.round(BMR * activityMultiplier));
 
     return TDEE;
+
 }
 
 
@@ -127,6 +131,7 @@ function calculateTDEEwithBF(gender, weight, weightUnit, bodyFatPercent, activit
 
     const TDEE = Math.round(BMR * activityMultiplier);
 
+    myTDEE = TDEE
     return TDEE;
 }
 
@@ -248,10 +253,12 @@ function wipeTable() {
 function addInfo(weight, weightClass) {
     weightLossFromCal(weight)
     weekOfWeighIn(weightClass)
-    notesForWeekOf();
     waterInfo();
     carbInfo();
+    addCalorieInfo();
     saltInfo();
+    notesForWeekOf();
+
 }
 
 function weekOfWeighIn(targetWeight) {
@@ -324,6 +331,26 @@ function saltInfo() {
 
 
 function addCalorieInfo() {
+    if (minWeightLossPerWeekNum < 2 && minWeightLossPerWeekNum > 1.5) {
+        calData = (myTDEE - 1000)
+    }
+    if (minWeightLossPerWeekNum < 1.5 && minWeightLossPerWeekNum > 1) {
+        calData = (myTDEE - 750)
+    }
+    if (minWeightLossPerWeekNum < 1 && minWeightLossPerWeekNum > .5) {
+        calData = (myTDEE - 500)
+    }
+    if (minWeightLossPerWeekNum < .5 && minWeightLossPerWeekNum > .1) {
+        calData = (myTDEE - 250)
+    }
+    if (minWeightLossPerWeekNum < 0) {
+        calData = myTDEE
+    }
+    let tds = document.querySelectorAll('.noteData')
+    for (let td of tds) {
+        td.innerText = `Total daily calories: ${calData}`
+    }
+
 
 }
 
