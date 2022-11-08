@@ -50,8 +50,9 @@ nav{
 }
 
 .navButton{
-    background-color: white;
-    color: white;
+    height: 2em;
+    width: 2em;
+    border-radius: 15%;
     border: 2px black solid;
 }
 
