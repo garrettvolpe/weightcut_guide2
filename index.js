@@ -84,8 +84,6 @@ function validateFormInputs(inputs) {
     return true;
 }
 
-
-
 function calculateTDEEnoBF(gender, age, weight, weightUnit, height, activityMultiplier) {
     // Mifflin St. Jeor
     // Mifflin = (10.m + 6.25h - 5.0a) + s
@@ -108,8 +106,6 @@ function calculateTDEEnoBF(gender, age, weight, weightUnit, height, activityMult
     return TDEE;
 
 }
-
-
 
 function calculateTDEEwithBF(gender, weight, bodyFatPercent, activityMultiplier) {
     // Katch-McArdle
@@ -135,7 +131,6 @@ function assignGlobalVar(targetWeight, weight) {
     let weekOutNum = Math.round((weightClass * 1.0625) * 2) / 2;
     weekOutWeight = weekOutNum
 }
-
 
 function carbStored(weight, bodyfat) {
     bodyfat = parseFloat(bodyfat / 100)
@@ -323,7 +318,6 @@ function saltInfo() {
     tds[tds.length - 1].innerText = "None"
 }
 
-
 function addCalorieInfo(gender, bodyFatPercent, activityLevel) {
     let calLoss;
     if (minWeightLossPerWeekNum < 2 && minWeightLossPerWeekNum > 1.5) {
@@ -400,7 +394,6 @@ function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     document.querySelector("#infoContainer").style.visibility = "visible";
     document.querySelector("#resultsWeightTable").style.visibility = "visible";
 }
-
 
 function formSubmit() {
     const inputs = {
