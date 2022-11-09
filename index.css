@@ -1,5 +1,3 @@
-
-
 body,
 select,
 button {
@@ -16,20 +14,20 @@ button {
 }
 
 body {
-    background-color:#558274
-    ;
+    background-color: #558274;
     margin-top: 0em;
 }
 
-nav{
-    background-color:#CE6843;
-    color:#F4E9E5;
+nav {
+    background-color: #CE6843;
+    color: #F4E9E5;
     margin-top: 0;
     margin-bottom: 2em;
-    
+
 }
-.navbar-nav a{
-    color:#F4E9E5 ;
+
+.navbar-nav a {
+    color: #F4E9E5;
     padding: 0;
     margin: 0;
 }
@@ -42,14 +40,18 @@ nav{
     font-size: 2em;
 }
 
-.navbar-brand{
+.navbar-brand {
     color: #122D24;
     font-size: 2em;
     margin-left: 2%;
     font-style: italic;
 }
 
-.navButton{
+navbar-brand:hover {
+    color: #122D24;
+}
+
+.navButton {
     height: 2em;
     width: 2em;
     border-radius: 15%;
@@ -62,7 +64,7 @@ nav{
 #errorStatsChangeNeeded,
 #infoContainer {
     background-color: #F4E9E5;
-    color:#0B310A;
+    color: #0B310A;
     border-radius: 10px;
     display: table;
     margin-left: auto;
@@ -113,6 +115,43 @@ h5 {
 
 
 
+
+details {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: .5em .5em 0;
+    background-color: #F4E9E5;
+    margin-top: 1em;
+}
+
+details:hover {
+    transition: all .1s ease-in;
+    background-color: #b8a9a4;
+}
+
+details[open] {
+    background-color: #F4E9E5;
+}
+
+summary {
+    font-weight: bold;
+    margin: -.5em -.5em 0;
+    padding: .5em;
+}
+
+details ul li strong {
+    font-style: italic;
+}
+
+details ul strong {
+    font-size: 1.1em;
+}
+
+
+.inProgress {
+    color: blue;
+}
+
 @media only screen and (max-width: 600px) {
     body {}
 
@@ -125,7 +164,7 @@ h5 {
         min-width: 100%
     }
 
-    .navbar-brand{
+    .navbar-brand {
         color: #122D24;
         font-size: 1.6em;
         margin: auto;
