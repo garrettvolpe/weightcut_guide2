@@ -62,7 +62,8 @@ navbar-brand:hover {
 #resultsContainer,
 #resultsWeightTable,
 #errorStatsChangeNeeded,
-#infoContainer {
+#infoContainer,
+#FAQContainer {
     background-color: #F4E9E5;
     color: #0B310A;
     border-radius: 10px;
@@ -70,22 +71,33 @@ navbar-brand:hover {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
+
+}
+
+#resultsContainer,
+#resultsWeightTable,
+#infoContainer,
+#errorStatsChangeNeeded,
+#FAQContainer {
+    text-align: center;
+    line-height: 150%;
+    padding: 1em 0px 1em 0px;
+
 }
 
 #resultsContainer,
 #resultsWeightTable,
 #infoContainer,
 #errorStatsChangeNeeded {
-    text-align: center;
-    line-height: 150%;
-    padding: 5px 0px 5px 0px;
     visibility: collapse;
 }
+
 
 #resultsWeightTable {
     min-width: 75%;
     padding: 0;
     margin-: 0;
+    margin-bottom: 0px;
 }
 
 
