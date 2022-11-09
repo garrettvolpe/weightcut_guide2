@@ -40,6 +40,10 @@ nav {
     font-size: 2em;
 }
 
+#navbarNavAltMarkup a:hover {
+    color: #cfcac9;
+}
+
 .navbar-brand {
     color: #122D24;
     font-size: 2em;
