@@ -100,6 +100,11 @@ navbar-brand:hover {
     margin-bottom: 0px;
 }
 
+#FAQContainer {
+    padding: 1em 1em;
+}
+
+
 
 label {
     display: inline-block;
