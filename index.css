@@ -14,7 +14,6 @@ button {
 }
 
 body {
-
     background: linear-gradient(to top left, #558274 10%, transparent 100%);
     margin-top: 0em;
 }
@@ -70,6 +69,7 @@ navbar-brand:hover {
 #infoContainer,
 #FAQContainer {
     background-color: #F4E9E5;
+    background: linear-gradient(to right, #F4E9E5, #b99f96);
     color: #0B310A;
     border-radius: 10px;
     display: table;
