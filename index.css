@@ -87,6 +87,7 @@ navbar-brand:hover {
     text-align: center;
     line-height: 150%;
     padding: 1em 0px 1em 0px;
+    padding: 1em 1em;
 
 }
 
@@ -101,7 +102,6 @@ navbar-brand:hover {
 #resultsWeightTable {
     min-width: 75%;
     padding: 0;
-    margin-: 0;
     margin-bottom: 0px;
 }
 
@@ -113,6 +113,17 @@ navbar-brand:hover {
 .mainLogo {
     height: 2em;
     width: 10em;
+}
+
+#resultsWeightTable {
+    max-width: 75%;
+    width: 200px;
+    margin-bottom: 5em;
+}
+
+.table {
+    margin-bottom: 0;
+
 }
 
 label {
@@ -191,7 +202,7 @@ details ul strong {
     }
 
     #resultsWeightTable {
-        min-width: 100%
+        max-width: 100%;
     }
 
     .navbar-brand {

@@ -1,13 +1,3 @@
-//set width of results and info divs to the same as the input form width
-window.onload = () => {
-    document.querySelector("#resultsContainer").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
-    document.querySelector("#infoContainer").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
-    document.querySelector("#resultsWeightTable").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
-    document.querySelector("#errorStatsChangeNeeded").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
-};
-
-
-
 
 const KILOGRAMS_PER_POUND = 0.4536;
 const CENTIMETERS_PER_INCH = 2.54;
@@ -376,7 +366,7 @@ function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
     safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
 
     let infoHTML =
-        `<strong>${getDaysUntilWeighIn(startDate, weighInDate)}</strong>
+        `<h4><strong>${getDaysUntilWeighIn(startDate, weighInDate)}</strong></h4>
         <br>
         Can lose an additional <strong>${carbWeight} pounds</strong> after eliminating carbs!
         <br>`;
