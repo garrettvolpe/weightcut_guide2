@@ -105,6 +105,10 @@ navbar-brand:hover {
 }
 
 
+.mainLogo {
+    height: 2em;
+    width: 10em;
+}
 
 label {
     display: inline-block;
@@ -191,5 +195,16 @@ details ul strong {
         margin: auto;
         font-style: italic;
     }
+
+    .mainNavBar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        justify-items: center;
+    }
+
+
+
 
 }
