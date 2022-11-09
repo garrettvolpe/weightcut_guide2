@@ -19,3 +19,15 @@ my colors:
 
 
 add logic to check if weight is > than weight class
+
+If i weight this much ___ How much time do I need to to do an (8,6,4) week camp to get to (target weight class)
+
+weighs 180 wants to fight at 145
+
+1lbs loss per week
+
+4 weeks = 3lbs
+6 weeks= = 5lbs
+8 weeks = 7lbs
+
+7 day out weight weightClass * 1.0625    (ie 154)

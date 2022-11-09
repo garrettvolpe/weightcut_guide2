@@ -146,7 +146,7 @@ function getDaysUntilWeighIn(start, end) {
     let date2 = new Date(end);
     let diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10);
     days = diffDays;
-    return `Days away : ${diffDays}`;
+    return `${diffDays} days away<br> or <br>${parseFloat(diffDays / 7).toFixed(1)} weeks out.`;
 }
 
 function roundNearestHalf(num) {
@@ -266,6 +266,7 @@ function notesForWeekOf() {
     tds[tds.length - 10].innerText = "Reduce carbs to under 20 grams per day"
     tds[tds.length - 7].innerText = "Hyper hydration process starts!"
     tds[tds.length - 5].innerText = "Reduce carbs to under 10 grams per day"
+    tds[tds.length - 2].innerText = "Can do an evening sauna or bath session if over expected weight"
     tds[tds.length - 1].innerText = "Morning sauna or bath for the last 2-3 pounds"
 }
 
