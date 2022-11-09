@@ -159,6 +159,10 @@ details ul strong {
     font-size: 1.1em;
 }
 
+.contactForm {
+    display: flex;
+    justify-content: center;
+}
 
 .inProgress {
     color: blue;

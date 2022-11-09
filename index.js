@@ -6,6 +6,9 @@ window.onload = () => {
     document.querySelector("#errorStatsChangeNeeded").style.width = window.getComputedStyle(document.querySelector("#inputsContainer")).getPropertyValue("width");
 };
 
+
+
+
 const KILOGRAMS_PER_POUND = 0.4536;
 const CENTIMETERS_PER_INCH = 2.54;
 const CM2_PER_M2 = 10000;
@@ -341,7 +344,7 @@ function addCalorieInfo(gender, bodyFatPercent, activityLevel) {
         calLoss = 0
     }
     let tds = document.querySelectorAll('.calData')
-    tds.forEach(function(td, i) {
+    tds.forEach(function (td, i) {
         let currentWieghts = document.querySelectorAll('.weightData')
         let currentWeight = currentWieghts[i].innerText
         let newTDEE = calculateTDEEwithBF(gender, currentWeight, bodyFatPercent, activityLevel)
@@ -437,7 +440,7 @@ function formSubmit() {
 
         printDatesForTable(inputs.startDate)
 
-        addInfo(inputs.weight, inputs.weightClass,inputs.gender,inputs.bodyFatPercent, inputs.activityLevel);
+        addInfo(inputs.weight, inputs.weightClass, inputs.gender, inputs.bodyFatPercent, inputs.activityLevel);
 
         if (isPossible) {
             document.querySelector("#errorStatsChangeNeeded").style.visibility = "collapse";
