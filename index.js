@@ -125,19 +125,24 @@ function assignGlobalVar(targetWeight, weight) {
 }
 
 function carbStored(weight, bodyfat) {
+    console.log("test1")
     bodyfat = parseFloat(bodyfat / 100)
     let liverStored = 0.77
     let muscleStored;
     let bodyfatMultiple = 1 - bodyfat
     let leanBodyMass = parseInt(weight) * bodyfatMultiple
+    console.log("test2")
     if (parseFloat(bodyfat) > .15) {
+        console.log("test3")
         muscleStored = (leanBodyMass * .015)
     }
-    else if (parseFloat(bodyfat) < .15) {
-
+    else if (parseFloat(bodyfat) <= .15) {
+        console.log("test4")
         muscleStored = (leanBodyMass * .02)
     }
+    console.log("test5")
     let myReturn = (muscleStored + liverStored).toFixed(2)
+    console.log("test6")
     return (muscleStored + liverStored).toFixed(2);
 }
 
