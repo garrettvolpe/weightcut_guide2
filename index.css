@@ -193,6 +193,20 @@ details ul strong {
     color: blue;
 }
 
+
+.faqQuestionLayout {
+    display: flex;
+}
+
+
+.faqQuestionLayout input {}
+
+.faqQuestionLayout button {
+    margin-left: 25%;
+}
+
+.faqQuestionLayout label {}
+
 @media only screen and (max-width: 600px) {
     body {}
 

@@ -444,5 +444,34 @@ function formSubmit() {
     }
 }
 
+try {
+    document.querySelector("#submitBtn").addEventListener("click", formSubmit);
+}
+catch {
 
-document.querySelector("#submitBtn").addEventListener("click", formSubmit);
+}
+
+try {
+    document.querySelector("#faq3Button").addEventListener("click", () => {
+        currentWeightFAQ3 = parseInt(document.querySelector("#currentWeightFAQ3").value);
+        weightClassFAQ3 = parseInt(document.querySelector("#weightClassFAQ3").value);
+        weekOutWeightFAQ3 = Math.round((weightClassFAQ3 * 1.0625) * 2) / 2;
+        amountOfWeeksFAQ3 = (currentWeightFAQ3 - weekOutWeightFAQ3) + 1
+        console.log(currentWeightFAQ3, weightClassFAQ3, weekOutWeightFAQ3, amountOfWeeksFAQ3)
+        if (amountOfWeeksFAQ3 > 12) {
+            document.querySelector('.faqQuestion3').innerHTML = `
+    <div style="text-align: center" class="alert alert-warning">Dieting for more than 12 weeks at a time is <strong>not recommended</strong>. It is encouraged to take 1-2 weeks off dieting every 12 weeks to ensure healthy hormone levels. </div>
+    <h5 style="text-align: center">You will need to diet for a minimum of <strong> ${amountOfWeeksFAQ3}</strong> weeks to be able to make the <strong> ${weightClassFAQ3} </strong> weight class. This is assuming you can lose 1 lbs per week (500 cal deficit)</h5>`
+        }
+        else {
+            document.querySelector('.faqQuestion3').innerHTML = `
+        <h5 style="text-align: center">You will need to diet for a minimum of <strong> ${amountOfWeeksFAQ3}</strong> weeks to be able to make the <strong> ${weightClassFAQ3} </strong> weight class. This is assuming you can lose 1 lbs per week (500 cal deficit)</h5>`
+        }
+
+
+    });
+}
+catch {
+
+}
+
