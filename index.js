@@ -31,7 +31,7 @@ function validateFormInputs(inputs) {
     inputs.startDate = document.getElementById('userSelectedStartDate').value;
     inputs.weighInDate = document.getElementById('userWeighInDate').value;
     inputs.weightClass = document.getElementById('weightClass').value;
-
+    inputs.carbSelection = document.getElementById('carbs').value;
     inputs.bodyFatPercent = parseInt(document.querySelector("#bodyFatPercent").value);
     inputs.bodyFatEntered = true;
 
@@ -155,6 +155,7 @@ function roundNearestHalf(num) {
 
 function createBaseTable() {
     let maindiv = document.querySelector('#resultsWeightTable');
+    let tableButton = document.createElement('button')
     let table = document.createElement('table');
     let tr = document.createElement('tr');
     let th1 = document.createElement('th');
@@ -164,6 +165,8 @@ function createBaseTable() {
     let th5 = document.createElement('th');
     let th6 = document.createElement('th');
     let th7 = document.createElement('th');
+    tableButton.id = "tableButton"
+    tableButton.innerText = "Clear Table"
     th1.innerHTML = "Date";
     th2.innerHTML = "Expected Weight";
     th3.innerHTML = "Calories";
@@ -180,8 +183,11 @@ function createBaseTable() {
     tr.appendChild(th7);
     table.appendChild(tr);
     table.classList.add("mainWeightTable", "table", "table-dark", "table-bordered")
+    maindiv.append(tableButton)
     maindiv.append(table);
-
+    document.getElementById("tableButton").addEventListener('click', () => {
+        wipeTable()
+    })
 }
 
 function renderTableRow(date, expectedWeight) {
@@ -237,6 +243,7 @@ function wipeTable() {
     maindiv.innerHTML = ''
 }
 
+
 function addInfo(weight, weightClass, gender, bodyFatPercent, activityLevel) {
     weightLossFromCal(weight)
     weekOfWeighIn(weightClass)
@@ -245,6 +252,7 @@ function addInfo(weight, weightClass, gender, bodyFatPercent, activityLevel) {
     addCalorieInfo(gender, bodyFatPercent, activityLevel);
     saltInfo();
     notesForWeekOf();
+    document.querySelector("#infoContainer").innerHTML += `<h5>You are expected to lose <strong> ${(caloricWeightLossNeededPerDay() * 7).toFixed(1)}</strong> pounds per week!</h5>`
 
 }
 
@@ -340,7 +348,6 @@ function addCalorieInfo(gender, bodyFatPercent, activityLevel) {
         let currentWeight = currentWieghts[i].innerText
         let newTDEE = calculateTDEEwithBF(gender, currentWeight, bodyFatPercent, activityLevel)
         let calRequirement = newTDEE - calLoss
-        console.log(calRequirement)
         td.innerText = `${calRequirement}`
     })
 
@@ -352,26 +359,48 @@ function caloricWeightLossNeededPerDay() {
     totalDaysForCalLoss = (tds.length - 7)
     totalAmountToLose = startingWeight - weekOutWeight
     minWeightLossPerWeek = totalAmountToLose / (totalDaysForCalLoss / 7)
+
     minWeightLossPerWeekNum = minWeightLossPerWeek
     if ((minWeightLossPerWeekNum) > 2) {
         isPossible = false
         return parseFloat(minWeightLossPerWeek / 7)
     }
-    else if (minWeightLossPerWeekNum < 2) {
+    else if (minWeightLossPerWeekNum < 2 && minWeightLossPerWeekNum > 1.5) {
+        if (startingWeight > 200) {
+            isPossible = true
+            return parseFloat(minWeightLossPerWeekNum / 7)
+        }
+        else {
+            isPossible = false
+            return parseFloat(minWeightLossPerWeekNum / 7)
+        }
+
+    }
+    else if (minWeightLossPerWeek <= 1.5) {
+
         isPossible = true
+        console.log(parseFloat(minWeightLossPerWeek / 7))
         return parseFloat(minWeightLossPerWeekNum / 7)
     }
 }
 
-function printOutput(TDEE, carbWeight, gender, startDate, weighInDate) {
+
+function printOutput(TDEE, carbWeight, gender, startDate, weighInDate, carbSelection) {
     safeMinCalories = (gender === "M") ? MIN_CAL_MALE : MIN_CAL_FEMALE;
 
-    let infoHTML =
-        `<h4><strong>${getDaysUntilWeighIn(startDate, weighInDate)}</strong></h4>
-        <br>
-        Can lose an additional <strong>${carbWeight} pounds</strong> after eliminating carbs!
-        <br>`;
+    let infoHTML;
+    if (carbSelection === 'yes') {
 
+        infoHTML =
+            `<h4><strong>${getDaysUntilWeighIn(startDate, weighInDate)}</strong></h4>
+        <br>
+        <h6>Can lose an additional <strong>${carbWeight} pounds</strong> after eliminating carbs!</h6>`;
+    }
+    else {
+        infoHTML =
+            `<h4><strong>${getDaysUntilWeighIn(startDate, weighInDate)}</strong></h4>
+        <br>`
+    }
     let resultsHTML =
         `Your Total Daily Caloric Expendature (maintenance) is <strong> ${Math.max(TDEE, safeMinCalories)}</strong> calories per day.
         <br>
@@ -425,9 +454,10 @@ function formSubmit() {
 
         wipeTable();
 
-        printOutput(TDEE, carbWeight, inputs.gender, inputs.startDate, inputs.weighInDate);
+        printOutput(TDEE, carbWeight, inputs.gender, inputs.startDate, inputs.weighInDate, inputs.carbSelection);
 
         createBaseTable();
+
 
         printDatesForTable(inputs.startDate)
 
@@ -457,7 +487,6 @@ try {
         weightClassFAQ3 = parseInt(document.querySelector("#weightClassFAQ3").value);
         weekOutWeightFAQ3 = Math.round((weightClassFAQ3 * 1.0625) * 2) / 2;
         amountOfWeeksFAQ3 = (currentWeightFAQ3 - weekOutWeightFAQ3) + 1
-        console.log(currentWeightFAQ3, weightClassFAQ3, weekOutWeightFAQ3, amountOfWeeksFAQ3)
         if (amountOfWeeksFAQ3 > 12) {
             document.querySelector('.faqQuestion3').innerHTML = `
     <div style="text-align: center" class="alert alert-warning">Dieting for more than 12 weeks at a time is <strong>not recommended</strong>. It is encouraged to take 1-2 weeks off dieting every 12 weeks to ensure healthy hormone levels. </div>

@@ -2,7 +2,6 @@ add section for:
 
 adding if user wants to do suana and bath or not
 how much weight to cut on the last day(if any)
-Sweater?
 
 
 
@@ -10,26 +9,4 @@ add a you are expected to lose X lbs a week in info tab
 
 carbs to calculate ! 35-40%
 
-
-my colors:
-
-#F4D1C9
-#A52D12
-#539652
-#1AAE18
-#0B310A
-
-
-add logic to check if weight is > than weight class
-
-If i weight this much ___ How much time do I need to to do an (8,6,4) week camp to get to (target weight class)
-
-weighs 180 wants to fight at 145
-
-1lbs loss per week
-
-4 weeks = 3lbs
-6 weeks= = 5lbs
-8 weeks = 7lbs
-
-7 day out weight weightClass * 1.0625    (ie 154)
+hyper hydration for weight class 
