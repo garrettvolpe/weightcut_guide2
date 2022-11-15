@@ -286,15 +286,31 @@ function notesForWeekOf() {
 function waterInfo() {
     let tds = document.querySelectorAll('.waterData')
     for (let td of tds) {
-        td.innerText = "1 Gal"
+        if (weightClass >= 145) {
+            td.innerText = "1 Gal"
+        }
+        else {
+            td.innerText = ".75 Gal"
+        }
     }
-    tds[tds.length - 7].innerHTML = "2 Gal"
-    tds[tds.length - 6].innerText = "2 Gal"
-    tds[tds.length - 5].innerText = "2 Gal"
-    tds[tds.length - 4].innerText = "1 Gal"
-    tds[tds.length - 3].innerText = ".5 Gal"
-    tds[tds.length - 2].innerText = ".25 Gal"
-    tds[tds.length - 1].innerText = "No Water"
+    if (weightClass >= 145) {
+        tds[tds.length - 7].innerHTML = "2 Gal"
+        tds[tds.length - 6].innerText = "2 Gal"
+        tds[tds.length - 5].innerText = "2 Gal"
+        tds[tds.length - 4].innerText = "1 Gal"
+        tds[tds.length - 3].innerText = ".5 Gal"
+        tds[tds.length - 2].innerText = ".25 Gal"
+        tds[tds.length - 1].innerText = "No Water"
+    }
+    else {
+        tds[tds.length - 7].innerHTML = "1.5 Gal"
+        tds[tds.length - 6].innerText = "1.5 Gal"
+        tds[tds.length - 5].innerText = "1.5 Gal"
+        tds[tds.length - 4].innerText = ".75 Gal"
+        tds[tds.length - 3].innerText = ".4 Gal"
+        tds[tds.length - 2].innerText = ".15 Gal"
+        tds[tds.length - 1].innerText = "No Water"
+    }
 }
 
 function carbInfo() {
