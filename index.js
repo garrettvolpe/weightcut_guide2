@@ -371,8 +371,17 @@ function addCalorieInfo(gender, bodyFatPercent, activityLevel) {
         let calRequirement = newTDEE - calLoss
         td.innerText = `${calRequirement}`
     })
+    if (tds[tds.length - 2].innerText >= 2000) {
+        tds[tds.length - 2].innerText = tds[tds.length - 2].innerText - 1000
+    }
+    else if (tds[tds.length - 2].innerText >= 1000 && tds[tds.length - 2].innerText < 2000) {
+        tds[tds.length - 2].innerText = tds[tds.length - 2].innerText - 500
+    }
+    else {
+        tds[tds.length - 2].innerText = '>1000'
+    }
 
-
+    tds[tds.length - 1].innerText = `>400`
 }
 
 function caloricWeightLossNeededPerDay() {
